@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthy Canteen Mission: Food Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FFFBF4;
+      --mint-50: #ECFDF5;
+      --mint-100: #D1FAE5;
+      --mint-400: #34D399;
+      --mint-500: #10B981;
+      --mint-700: #047857;
+      --orange-50: #FFF7ED;
+      --orange-100: #FFEDD5;
+      --orange-400: #FB923C;
+      --orange-500: #F97316;
+      --orange-600: #EA580C;
+      --yellow-100: #FEF3C7;
+      --yellow-400: #FBBF24;
+      --yellow-500: #F59E0B;
+      --blue-50: #EFF6FF;
+      --blue-100: #DBEAFE;
+      --blue-500: #3B82F6;
+      --blue-700: #1D4ED8;
+      --slate-800: #1E293B;
+      --slate-600: #475569;
+      --slate-400: #94A3B8;
+      --red-500: #EF4444;
+      --red-100: #FEE2E2;
+      --card-shadow: 0 10px 25px -5px rgba(30, 41, 59, 0.08), 0 4px 10px -2px rgba(30, 41, 59, 0.04);
+      --btn-shadow: 0 5px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--slate-800);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(52, 211, 153, 0.14) 0%, transparent 28%),
+        radial-gradient(circle at 88% 12%, rgba(251, 191, 36, 0.16) 0%, transparent 26%),
+        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.12) 0%, transparent 28%),
+        linear-gradient(180deg, #FFFDF8 0%, #F4F9F7 100%);
+    }
+
+    /* Subtle School Cafeteria Tile & Awning Header Backdrop */
+    .canteen-backdrop {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+      background-size: 48px 48px;
+      background-image:
+        linear-gradient(to right, rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+    }
+
+    .awning-bar {
+      height: 14px;
+      width: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        #10B981 0px,
+        #10B981 36px,
+        #FFFBF4 36px,
+        #FFFBF4 72px,
+        #F97316 72px,
+        #F97316 108px,
+        #FFFBF4 108px,
+        #FFFBF4 144px
+      );
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      position: relative;
+      z-index: 20;
+    }
+
+    h1, h2, h3, .font-display {
+      font-family: 'Fredoka', sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    /* Top HUD */
+    .hud-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #E2E8F0;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hud-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .hud-logo-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--mint-500), var(--blue-500));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+
+    .hud-title {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--slate-800);
+      line-height: 1.1;
+    }
+
+    .hud-subtitle {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--mint-700);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .hud-stats {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      border: 2px solid transparent;
+      transition: transform 0.2s ease;
+    }
+
+    .stat-pill.score {
+      background: var(--yellow-100);
+      color: #92400E;
+      border-color: #FDE68A;
+    }
+
+    .stat-pill.stars {
+      background: var(--orange-100);
+      color: #9A3412;
+      border-color: #FED7AA;
+    }
+
+    .stat-pill.badges {
+      background: var(--blue-100);
+      color: #1E40AF;
+      border-color: #BFDBFE;
+      cursor: pointer;
+    }
+
+    .stat-pill.badges:hover {
+      transform: translateY(-2px);
+    }
+
+    .hud-nav-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Buttons */
+    .btn {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: 16px;
+      padding: 12px 22px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+      box-shadow: var(--btn-shadow);
+      user-select: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--mint-500), #059669);
+      color: white;
+    }
+
+    .btn-orange {
+      background: linear-gradient(135deg, var(--orange-500), var(--orange-600));
+      color: white;
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+      color: white;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--slate-800);
+      border: 2px solid #CBD5E1;
+      box-shadow: 0 4px 0 #CBD5E1;
+    }
+
+    .btn-sm {
+      padding: 8px 14px;
+      font-size: 0.88rem;
+      border-radius: 12px;
+    }
+
+    /* Container */
+    .app-container {
+      position: relative;
+      z-index: 10;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+    }
+
+    .screen {
+      display: none;
+      animation: fadeSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Realistic Food Photo Frame Styles */
+    .food-photo-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #F1F5F9;
+      border: 2px solid #E2E8F0;
+    }
+
+    .food-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .food-card-interactive:hover .food-photo-wrap img {
+      transform: scale(1.05);
+    }
+
+    .photo-badge-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(6px);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    /* Hero / Main Menu */
+    .hero-card {
+      background: white;
+      border-radius: 32px;
+      padding: 36px;
+      box-shadow: var(--card-shadow);
+      border: 3px solid var(--mint-100);
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--mint-100);
+      color: var(--mint-700);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.08;
+      color: var(--slate-800);
+      margin-bottom: 14px;
+    }
+
+    .hero-title span {
+      color: var(--orange-500);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--slate-600);
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .student-name-box {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      background: var(--blue-50);
+      padding: 12px 16px;
+      border-radius: 18px;
+      border: 2px solid var(--blue-100);
+    }
+
+    .student-name-box input {
+      border: 2px solid #CBD5E1;
+      border-radius: 12px;
+      padding: 9px 14px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.95rem;
+      outline: none;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .student-name-box input:focus {
+      border-color: var(--blue-500);
+    }
+
+    .hero-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .showcase-photo-card {
+      background: var(--bg-cream);
+      border-radius: 20px;
+      padding: 10px;
+      border: 2px solid #E2E8F0;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+    }
+
+    .showcase-photo-card .food-photo-wrap {
+      height: 125px;
+      margin-bottom: 8px;
+    }
+
+    .showcase-photo-card .label {
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-align: center;
+      color: var(--slate-800);
+    }
+
+    /* Instructions Grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .info-card {
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      border: 2px solid #E2E8F0;
+      box-shadow: var(--card-shadow);
+    }
+
+    .info-step-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--orange-100);
+      color: var(--orange-600);
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+    }
+
+    /* Level Map */
+    .map-header {
+      background: white;
+      border-radius: 26px;
+      padding: 24px 28px;
+      box-shadow: var(--card-shadow);
+      border: 2px solid var(--mint-100);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .overall-progress-wrap {
+      min-width: 240px;
+      flex: 1;
+      max-width: 380px;
+    }
+
+    .progress-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--slate-600);
+    }
+
+    .progress-track {
+      height: 14px;
+      background: #E2E8F0;
+      border-radius: 999px;
+      overflow: hidden;
+      padding: 2px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--mint-400), var(--blue-500));
+      transition: width 0.4s ease;
+    }
+
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .level-card {
+      background: white;
+      border-radius: 26px;
+      padding: 24px;
+      border: 3px solid #E2E8F0;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .level-card.unlocked:hover {
+      transform: translateY(-4px);
+      border-color: var(--mint-400);
+    }
+
+    .level-card.completed {
+      border-color: var(--mint-500);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
+    }
+
+    .level-card.locked {
+      opacity: 0.72;
+      background: #F8FAFC;
+    }
+
+    .level-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .level-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--blue-100);
+      color: var(--blue-700);
+    }
+
+    .level-stars {
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+    }
+
+    .level-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    .level-card p {
+      color: var(--slate-600);
+      font-size: 0.93rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .level-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .skill-chip {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--orange-50);
+      color: var(--orange-600);
+      border: 1px solid var(--orange-100);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    /* Active Level Gameplay Shell */
+    .stage-panel {
+      background: white;
+      border-radius: 30px;
+      padding: 28px;
+      box-shadow: var(--card-shadow);
+      border: 3px solid #E2E8F0;
+    }
+
+    .stage-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 16px;
+      margin-bottom: 22px;
+      border-bottom: 2px dashed #E2E8F0;
+    }
+
+    .stage-badge {
+      background: var(--orange-100);
+      color: var(--orange-600);
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .step-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .step-dot {
+      width: 28px;
+      height: 10px;
+      border-radius: 999px;
+      background: #E2E8F0;
+      transition: all 0.25s ease;
+    }
+
+    .step-dot.done {
+      background: var(--mint-500);
+    }
+
+    .step-dot.current {
+      background: var(--orange-500);
+      width: 40px;
+    }
+
+    /* Level 1: Detective Layout */
+    .detective-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .detective-photo-frame {
+      background: var(--bg-cream);
+      padding: 14px;
+      border-radius: 26px;
+      border: 3px solid var(--yellow-400);
+      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.14);
+    }
+
+    .detective-photo-frame .food-photo-wrap {
+      height: 300px;
+    }
+
+    .clue-box {
+      background: var(--blue-50);
+      border-left: 5px solid var(--blue-500);
+      padding: 14px 18px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      font-weight: 600;
+      color: var(--slate-800);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: white;
+      border: 3px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 15px 16px;
+      text-align: left;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: var(--slate-800);
+      cursor: pointer;
+      transition: all 0.16s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--blue-500);
+      background: var(--blue-50);
+      transform: translateY(-2px);
+    }
+
+    .option-btn.correct {
+      border-color: var(--mint-500);
+      background: var(--mint-50);
+      color: var(--mint-700);
+    }
+
+    .option-btn.wrong {
+      border-color: var(--red-500);
+      background: var(--red-100);
+      color: #991B1B;
+    }
+
+    /* Matching Game */
+    .match-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .match-item {
+      background: white;
+      border: 3px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      transition: all 0.16s ease;
+      margin-bottom: 12px;
+    }
+
+    .match-item:hover:not(.matched) {
+      border-color: var(--orange-400);
+    }
+
+    .match-item.selected {
+      border-color: var(--blue-500);
+      background: var(--blue-50);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .match-item.matched {
+      border-color: var(--mint-500);
+      background: var(--mint-50);
+      opacity: 0.78;
+      cursor: default;
+    }
+
+    .match-thumb {
+      width: 68px;
+      height: 54px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid #CBD5E1;
+    }
+
+    /* Level 2: Drag & Drop Food Lab */
+    .lab-tray {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      background: #F8FAFC;
+      border: 2px dashed #CBD5E1;
+      border-radius: 22px;
+      padding: 16px;
+      margin-bottom: 22px;
+      min-height: 150px;
+    }
+
+    .draggable-food {
+      background: white;
+      border: 3px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 10px;
+      cursor: grab;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      user-select: none;
+    }
+
+    .draggable-food:active {
+      cursor: grabbing;
+    }
+
+    .draggable-food.selected-tap {
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+      transform: translateY(-3px);
+    }
+
+    .draggable-food img {
+      width: 100%;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 6px;
+      pointer-events: none;
+    }
+
+    .draggable-food span {
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: block;
+    }
+
+    .drop-zones-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .drop-zone {
+      border-radius: 22px;
+      padding: 16px;
+      min-height: 230px;
+      border: 3px dashed;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .drop-zone.healthy {
+      background: var(--mint-50);
+      border-color: var(--mint-400);
+    }
+
+    .drop-zone.energy {
+      background: var(--blue-50);
+      border-color: var(--blue-500);
+    }
+
+    .drop-zone.treats {
+      background: var(--orange-50);
+      border-color: var(--orange-400);
+    }
+
+    .drop-zone.drag-over {
+      transform: scale(1.02);
+      filter: brightness(0.97);
+    }
+
+    .drop-zone-header {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .drop-zone-sub {
+      font-size: 0.8rem;
+      color: var(--slate-600);
+      margin-bottom: 12px;
+    }
+
+    .dropped-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    /* Menu Board (Level 3 & Final Mission) */
+    .menu-board-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .menu-item-card {
+      background: white;
+      border: 2px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 12px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      transition: all 0.18s ease;
+    }
+
+    .menu-item-card.selectable {
+      cursor: pointer;
+    }
+
+    .menu-item-card.selectable:hover {
+      border-color: var(--orange-400);
+      transform: translateY(-2px);
+    }
+
+    .menu-item-card.picked {
+      border: 3px solid var(--mint-500);
+      background: var(--mint-50);
+    }
+
+    .menu-item-photo {
+      width: 96px;
+      height: 86px;
+      border-radius: 14px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid #CBD5E1;
+    }
+
+    .menu-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .menu-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .menu-item-name {
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: var(--slate-800);
+    }
+
+    .menu-price-tag {
+      background: var(--yellow-100);
+      color: #92400E;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+
+    .menu-item-desc {
+      font-size: 0.8rem;
+      color: var(--slate-600);
+      line-height: 1.35;
+    }
+
+    /* Level 4: Student Scenario */
+    .student-scenario-card {
+      background: linear-gradient(135deg, var(--blue-50), var(--mint-50));
+      border: 3px solid var(--blue-100);
+      border-radius: 24px;
+      padding: 22px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .student-avatar-box {
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
+      background: white;
+      border: 3px solid var(--blue-500);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 14px rgba(59, 130, 246, 0.15);
+    }
+
+    .speech-bubble {
+      background: white;
+      border-radius: 20px;
+      padding: 16px 20px;
+      border: 2px solid #CBD5E1;
+      position: relative;
+      flex: 1;
+    }
+
+    .budget-pill {
+      display: inline-block;
+      background: var(--mint-500);
+      color: white;
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-top: 8px;
+    }
+
+    /* Level 5: Spot the Mistake */
+    .sentence-tokens {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: #F8FAFC;
+      padding: 18px;
+      border-radius: 18px;
+      border: 2px solid #CBD5E1;
+      margin: 16px 0;
+    }
+
+    .word-token {
+      background: white;
+      border: 2px solid #CBD5E1;
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .word-token:hover {
+      border-color: var(--orange-500);
+      background: var(--orange-50);
+    }
+
+    .word-token.selected-mistake {
+      border-color: var(--red-500);
+      background: var(--red-100);
+      color: #991B1B;
+    }
+
+    /* Final Mission Receipt & Sentence Builder */
+    .final-layout {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .receipt-panel {
+      background: #FFFDF9;
+      border: 3px solid var(--orange-400);
+      border-radius: 24px;
+      padding: 20px;
+      position: sticky;
+      top: 84px;
+    }
+
+    .writing-builder-box {
+      background: var(--blue-50);
+      border: 2px solid var(--blue-100);
+      border-radius: 20px;
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .writing-builder-box select,
+    .writing-builder-box input {
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 2px solid var(--blue-500);
+      background: white;
+      color: var(--slate-800);
+      margin: 4px;
+    }
+
+    /* Feedback Banner */
+    .feedback-banner {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 18px;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      animation: fadeSlideIn 0.25s ease;
+    }
+
+    .feedback-banner.show {
+      display: flex;
+    }
+
+    .feedback-banner.success {
+      background: var(--mint-100);
+      color: var(--mint-700);
+      border: 2px solid var(--mint-500);
+    }
+
+    .feedback-banner.error {
+      background: var(--red-100);
+      color: #991B1B;
+      border: 2px solid var(--red-500);
+    }
+
+    /* Modal for Badges & Certificate */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(4px);
+      z-index: 60;
+      display: none;
+      place-items: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: grid;
+    }
+
+    .modal-card {
+      background: white;
+      border-radius: 28px;
+      max-width: 640px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 3px solid var(--mint-400);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .badges-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .badge-tile {
+      border: 2px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 14px;
+      text-align: center;
+      background: #F8FAFC;
+    }
+
+    .badge-tile.earned {
+      border-color: var(--yellow-400);
+      background: var(--yellow-100);
+    }
+
+    /* Certificate */
+    .certificate-box {
+      border: 6px double var(--mint-500);
+      border-radius: 24px;
+      padding: 28px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #FFFBEB 100%);
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    @media (max-width: 860px) {
+      .hero-card,
+      .detective-grid,
+      .final-layout,
+      .drop-zones-grid {
+        grid-template-columns: 1fr;
+      }
+      .options-grid,
+      .match-columns {
+        grid-template-columns: 1fr;
+      }
+      .student-scenario-card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="canteen-backdrop"></div>
+  <div class="awning-bar"></div>
+
+  <!-- Top HUD -->
+  <header class="hud-header">
+    <div class="hud-brand" onclick="showScreen('menu')">
+      <div class="hud-logo-badge">HC</div>
+      <div>
+        <div class="hud-title">Healthy Canteen Mission</div>
+        <div class="hud-subtitle">Grade 7 English Adventure</div>
+      </div>
+    </div>
+
+    <div class="hud-stats">
+      <div class="stat-pill score" title="Total Score">
+        <span>Points:</span> <span id="hud-score">0</span>
+      </div>
+      <div class="stat-pill stars" title="Total Stars Earned">
+        <span>Stars:</span> <span id="hud-stars">0</span> / 18
+      </div>
+      <div class="stat-pill badges" onclick="openBadgesModal()" title="View Earned Badges">
+        <span>Badges:</span> <span id="hud-badges">0</span> / 6
+      </div>
+    </div>
+
+    <div class="hud-nav-btns">
+      <button class="btn btn-secondary btn-sm" onclick="showScreen('menu')">Home</button>
+      <button class="btn btn-blue btn-sm" onclick="showScreen('map')">Level Map</button>
+    </div>
+  </header>
+
+  <main class="app-container">
+    <!-- SCREEN 1: MAIN MENU -->
+    <section id="screen-menu" class="screen active">
+      <div class="hero-card">
+        <div>
+          <div class="hero-pill">School Cafeteria Roleplay &bull; Grade 7 English</div>
+          <h1 class="hero-title">Healthy Canteen Mission: <span>Food Adventure</span></h1>
+          <p class="hero-desc">
+            Step into the school cafeteria as the official <strong>Student Canteen Advisor</strong>! Identify real meals, analyze nutrition, compare prices, help classmates choose balanced lunches, and build the ultimate healthy menu.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="startAdventure()">Start Adventure</button>
+            <button class="btn btn-orange" onclick="showScreen('map')">Open Level Map</button>
+            <button class="btn btn-secondary" onclick="toggleInstructions()">How to Play</button>
+          </div>
+
+          <div class="student-name-box">
+            <label for="player-name-input" style="font-weight: 800; font-size: 0.9rem;">Advisor Name:</label>
+            <input type="text" id="player-name-input" placeholder="Enter your name (e.g., Maya)" maxlength="28" oninput="savePlayerName(this.value)" />
+          </div>
+        </div>
+
+        <div class="hero-showcase-grid" id="hero-food-preview">
+          <!-- Populated with realistic food photographs by JS -->
+        </div>
+      </div>
+
+      <!-- Collapsible Instructions Panel -->
+      <div id="instructions-panel" class="stage-panel" style="margin-bottom: 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h2 style="font-size:1.45rem;">How to Play & Mission Guide</h2>
+          <span class="stage-badge">6 Progressive Missions</span>
+        </div>
+        <p style="color:var(--slate-600); font-size:0.95rem;">
+          Complete each canteen station in order to unlock the next challenge. Read the English clues carefully, inspect the food photos and price tags, and earn up to 3 stars per level!
+        </p>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-step-num">1</div>
+            <h3 style="font-size:1.05rem; margin-bottom:4px;">Inspect Real Meals</h3>
+            <p style="font-size:0.86rem; color:var(--slate-600);">Identify food names, flavors (spicy, sweet, savory), and serving temperatures from real photographs.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-step-num">2</div>
+            <h3 style="font-size:1.05rem; margin-bottom:4px;">Sort & Compare</h3>
+            <p style="font-size:0.86rem; color:var(--slate-600);">Categorize foods in the Healthy Food Lab and calculate smart combos on the Canteen Menu Board.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-step-num">3</div>
+            <h3 style="font-size:1.05rem; margin-bottom:4px;">Advise Classmates</h3>
+            <p style="font-size:0.86rem; color:var(--slate-600);">Read student requests, spot grammar/nutrition mistakes, and write your own English recommendation.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-step-num">4</div>
+            <h3 style="font-size:1.05rem; margin-bottom:4px;">Earn Your Certificate</h3>
+            <p style="font-size:0.86rem; color:var(--slate-600);">Collect all 6 badges and unlock your personalized Master Canteen Advisor Certificate at the end.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: LEVEL MAP -->
+    <section id="screen-map" class="screen">
+      <div class="map-header">
+        <div>
+          <h2 style="font-size:1.75rem; margin-bottom:4px;">Canteen Mission Map</h2>
+          <p style="color:var(--slate-600); font-size:0.95rem;">Select an unlocked station to begin or replay to improve your stars.</p>
+        </div>
+
+        <div class="overall-progress-wrap">
+          <div class="progress-label-row">
+            <span>Campaign Progress</span>
+            <span id="map-progress-text">0 / 6 Completed</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="map-progress-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary btn-sm" onclick="confirmResetGame()">Reset Progress</button>
+      </div>
+
+      <div class="levels-grid" id="levels-grid">
+        <!-- Level cards generated dynamically -->
+      </div>
+    </section>
+
+    <!-- SCREEN 3: ACTIVE GAMEPLAY STAGE -->
+    <section id="screen-play" class="screen">
+      <div class="stage-panel">
+        <div class="stage-topbar">
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="showScreen('map')">&larr; Map</button>
+            <span class="stage-badge" id="play-level-badge">Level 1</span>
+            <h2 id="play-level-title" style="font-size:1.35rem;">Food Detective</h2>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div class="step-dots" id="play-step-dots"></div>
+            <span style="font-weight:800; font-size:0.9rem; color:var(--slate-600);" id="play-step-counter">Task 1 / 5</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Assessment Workspace -->
+        <div id="play-workspace"></div>
+
+        <!-- Immediate Feedback Banner -->
+        <div id="feedback-banner" class="feedback-banner">
+          <div id="feedback-text"></div>
+          <div id="feedback-actions" style="display:flex; gap:10px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: FINAL COMPLETION & CERTIFICATE -->
+    <section id="screen-complete" class="screen">
+      <div class="stage-panel" style="text-align:center;">
+        <div class="hero-pill" style="margin-bottom:10px;">Campaign Accomplished!</div>
+        <h2 style="font-size:2.1rem; margin-bottom:8px;">Congratulations, Master Canteen Advisor!</h2>
+        <p style="color:var(--slate-600); max-width:640px; margin:0 auto 20px;">
+          You have completed every station in the school cafeteria, mastered English food vocabulary, compared budgets, and designed a balanced student meal.
+        </p>
+
+        <div class="certificate-box" id="certificate-area">
+          <div style="font-size:0.85rem; font-weight:800; letter-spacing:0.12em; color:var(--mint-700); text-transform:uppercase;">Official School Cafeteria Award</div>
+          <h3 style="font-size:1.9rem; margin:8px 0; color:var(--slate-800);">Certificate of Canteen Excellence</h3>
+          <p style="color:var(--slate-600); font-size:0.95rem;">This certifies that</p>
+          <div id="cert-student-name" style="font-family:'Fredoka',sans-serif; font-size:2rem; color:var(--orange-600); margin:8px 0; text-decoration:underline;">
+            Grade 7 Student Advisor
+          </div>
+          <p style="color:var(--slate-600); font-size:0.95rem; max-width:520px; margin:0 auto 16px;">
+            has successfully completed <strong>Healthy Canteen Mission: Food Adventure</strong> with a final score of <strong id="cert-score">0</strong> points and <strong id="cert-stars">0</strong> stars.
+          </p>
+          <div id="cert-recommendation-quote" style="background:white; border:2px dashed var(--mint-400); border-radius:14px; padding:12px 18px; max-width:540px; margin:0 auto; font-style:italic; font-weight:700; color:var(--slate-800);">
+            "I recommend Garden Salad and Hot Tea because they are fresh, healthy, and affordable."
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:20px;">
+          <button class="btn btn-primary" onclick="window.print()">Print / Save Certificate</button>
+          <button class="btn btn-blue" onclick="showScreen('map')">Review Level Map</button>
+          <button class="btn btn-orange" onclick="confirmResetGame()">Restart Game</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- BADGES MODAL -->
+  <div id="badges-modal" class="modal-backdrop" onclick="if(event.target===this) closeBadgesModal()">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="font-size:1.5rem;">Advisor Badge Collection</h2>
+        <button class="btn btn-secondary btn-sm" onclick="closeBadgesModal()">Close</button>
+      </div>
+      <p style="color:var(--slate-600); font-size:0.9rem; margin-top:4px;">Complete each canteen level to unlock its official advisor badge.</p>
+      <div class="badges-showcase" id="badges-modal-grid"></div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       1. REALISTIC FOOD PHOTOGRAPHY CATALOG
+       Curated high-resolution, bright, realistic food photography URLs with
+       graceful photorealistic fallback handler so images always render cleanly.
+       ========================================================================= */
+    const FOOD_ITEMS = {
+      fried_rice: {
+        id: 'fried_rice',
+        name: 'Fried Rice',
+        price: 12000,
+        priceLabel: 'Rp 12.000',
+        taste: 'Savory & Slightly Spicy',
+        temp: 'Hot',
+        category: 'energy',
+        healthy: true,
+        isDrink: false,
+        desc: 'Warm savory rice stir-fried with egg, diced carrots, peas, and mild spices.',
+        img: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=85'
+      },
+      meatballs: {
+        id: 'meatballs',
+        name: 'Meatballs',
+        price: 10000,
+        priceLabel: 'Rp 10.000',
+        taste: 'Savory & Umami',
+        temp: 'Hot',
+        category: 'energy',
+        healthy: true,
+        isDrink: false,
+        desc: 'Tender beef meatballs served hot in clear savory broth with fresh greens.',
+        img: 'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=800&q=85'
+      },
+      banana: {
+        id: 'banana',
+        name: 'Banana',
+        price: 3000,
+        priceLabel: 'Rp 3.000',
+        taste: 'Naturally Sweet',
+        temp: 'Room Temperature',
+        category: 'healthy',
+        healthy: true,
+        isDrink: false,
+        desc: 'Fresh ripe yellow banana packed with natural energy, potassium, and fiber.',
+        img: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=85'
+      },
+      cake: {
+        id: 'cake',
+        name: 'Cake',
+        price: 8000,
+        priceLabel: 'Rp 8.000',
+        taste: 'Very Sweet & Creamy',
+        temp: 'Cool / Room Temp',
+        category: 'treats',
+        healthy: false,
+        isDrink: false,
+        desc: 'Soft frosted sponge cake slice; high in sugar, best enjoyed as an occasional treat.',
+        img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=85'
+      },
+      salad: {
+        id: 'salad',
+        name: 'Salad',
+        price: 9000,
+        priceLabel: 'Rp 9.000',
+        taste: 'Fresh & Crisp',
+        temp: 'Cool / Chilled',
+        category: 'healthy',
+        healthy: true,
+        isDrink: false,
+        desc: 'Crisp lettuce, cherry tomatoes, cucumber, and sweet corn with light dressing.',
+        img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=85'
+      },
+      hot_tea: {
+        id: 'hot_tea',
+        name: 'Hot Tea',
+        price: 4000,
+        priceLabel: 'Rp 4.000',
+        taste: 'Mild & Aromatic',
+        temp: 'Hot',
+        category: 'healthy',
+        healthy: true,
+        isDrink: true,
+        desc: 'Freshly brewed warm tea in a ceramic cup, soothing on rainy or cool school days.',
+        img: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=85'
+      },
+      iced_tea: {
+        id: 'iced_tea',
+        name: 'Iced Tea',
+        price: 5000,
+        priceLabel: 'Rp 5.000',
+        taste: 'Refreshing & Lightly Sweet',
+        temp: 'Cold',
+        category: 'treats',
+        healthy: true,
+        isDrink: true,
+        desc: 'Chilled amber tea served over crystal ice cubes with a fresh slice of lemon.',
+        img: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=85'
+      },
+      chilli: {
+        id: 'chilli',
+        name: 'Spicy Chilli Dish',
+        price: 11000,
+        priceLabel: 'Rp 11.000',
+        taste: 'Very Spicy & Fiery',
+        temp: 'Hot',
+        category: 'energy',
+        healthy: true,
+        isDrink: false,
+        desc: 'Zesty stir-fry cooked with bright red chilli peppers for students who love spicy food.',
+        img: 'https://images.unsplash.com/photo-1583119022894-919a68a3d0e3?auto=format&fit=crop&w=800&q=85'
+      }
+    };
+
+    // High-resolution photographic fallback data URI generator in case an external network blocks Unsplash
+    function handleImgError(imgEl, foodName) {
+      imgEl.onerror = null;
+      const canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 420;
+      const ctx = canvas.getContext('2d');
+      const grad = ctx.createLinearGradient(0, 0, 600, 420);
+      grad.addColorStop(0, '#F1F5F9');
+      grad.addColorStop(1, '#E2E8F0');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 600, 420);
+      ctx.fillStyle = '#0F172A';
+      ctx.font = 'bold 34px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(foodName, 300, 205);
+      ctx.fillStyle = '#475569';
+      ctx.font = '20px sans-serif';
+      ctx.fillText('Canteen Photo Card', 300, 245);
+      imgEl.src = canvas.toDataURL('image/png');
+    }
+
+    /* =========================================================================
+       2. WEB AUDIO SOUND EFFECTS (Subtle UI Feedback)
+       ========================================================================= */
+    const AudioFX = {
+      ctx: null,
+      play(type) {
+        try {
+          if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          if (type === 'correct') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(523.25, now);
+            osc.frequency.setValueAtTime(659.25, now + 0.09);
+            osc.frequency.setValueAtTime(783.99, now + 0.18);
+            gain.gain.setValueAtTime(0.14, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+            osc.start(now);
+            osc.stop(now + 0.36);
+          } else if (type === 'wrong') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(220, now);
+            osc.frequency.linearRampToValueAtTime(165, now + 0.25);
+            gain.gain.setValueAtTime(0.1, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+            osc.start(now);
+            osc.stop(now + 0.28);
+          } else {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, now);
+            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+            osc.start(now);
+            osc.stop(now + 0.1);
+          }
+        } catch (e) {}
+      }
+    };
+
+    /* =========================================================================
+       3. GAME STATE & LEVEL METADATA
+       ========================================================================= */
+    const LEVELS_META = [
+      {
+        id: 1,
+        title: 'Food Detective',
+        badgeName: 'Eagle-Eyed Detective',
+        desc: 'Inspect real cafeteria photographs to identify food names, tastes, serving temperatures, and matching descriptions.',
+        skills: ['Picture Quiz', 'Taste & Temp', 'Photo Matching']
+      },
+      {
+        id: 2,
+        title: 'Healthy Food Lab',
+        badgeName: 'Nutrition Scientist',
+        desc: 'Sort real canteen foods into nutrition categories using drag-and-drop and verify healthy eating facts.',
+        skills: ['Drag & Drop Sorting', 'True / False Lab']
+      },
+      {
+        id: 3,
+        title: 'Price Challenge',
+        badgeName: 'Smart Budget Master',
+        desc: 'Read the Canteen Menu Board, match items to their exact Rupiah prices, and solve value comparison puzzles.',
+        skills: ['Menu Board', 'Price Matching', 'Value Puzzles']
+      },
+      {
+        id: 4,
+        title: 'Help Your Friends',
+        badgeName: 'Caring Peer Advisor',
+        desc: 'Listen to four classmates with different budgets, weather moods, and tastes, then pick the ideal meal for each.',
+        skills: ['Scenario Decisions', 'Budget + Taste Fit']
+      },
+      {
+        id: 5,
+        title: 'Food Judge',
+        badgeName: 'Canteen Truth Judge',
+        desc: 'Evaluate canteen statements as Agree or Disagree and tap the incorrect word in Spot-the-Mistake sentences.',
+        skills: ['Agree / Disagree', 'Spot the Mistake']
+      },
+      {
+        id: 6,
+        title: 'Final Mission: The Perfect Menu',
+        badgeName: 'Master Canteen Advisor',
+        desc: 'Build a balanced food + drink combo within a Rp 15.000 budget and complete your English recommendation.',
+        skills: ['Menu Builder', 'Auto Calculator', 'Guided Writing']
+      }
+    ];
+
+    const DEFAULT_STATE = {
+      playerName: '',
+      score: 0,
+      unlockedLevel: 1,
+      levelStars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
+      completedLevels: { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false },
+      finalSentence: ''
+    };
+
+    let gameState = loadState();
+    let activeSession = null;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem('healthy_canteen_realphoto_v1');
+        if (raw) return { ...DEFAULT_STATE, ...JSON.parse(raw) };
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('healthy_canteen_realphoto_v1', JSON.stringify(gameState));
+      } catch (e) {}
+      updateHUD();
+    }
+
+    function savePlayerName(val) {
+      gameState.playerName = val.trim();
+      saveState();
+    }
+
+    function confirmResetGame() {
+      if (confirm('Reset all stars, score, and unlocked levels to start fresh?')) {
+        gameState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+        document.getElementById('player-name-input').value = '';
+        saveState();
+        renderLevelMap();
+        showScreen('menu');
+      }
+    }
+
+    /* =========================================================================
+       4. NAVIGATION & HUD UPDATES
+       ========================================================================= */
+    function showScreen(screenName) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(`screen-${screenName}`).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (screenName === 'map') renderLevelMap();
+      if (screenName === 'complete') renderCertificate();
+    }
+
+    function toggleInstructions() {
+      const el = document.getElementById('instructions-panel');
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function startAdventure() {
+      const target = Math.min(gameState.unlockedLevel, 6);
+      startLevel(target);
+    }
+
+    function updateHUD() {
+      document.getElementById('hud-score').textContent = gameState.score;
+      const totalStars = Object.values(gameState.levelStars).reduce((a, b) => a + b, 0);
+      document.getElementById('hud-stars').textContent = totalStars;
+      const earnedBadges = Object.values(gameState.completedLevels).filter(Boolean).length;
+      document.getElementById('hud-badges').textContent = earnedBadges;
+    }
+
+    function renderHeroShowcase() {
+      const previewKeys = ['fried_rice', 'salad', 'banana', 'iced_tea'];
+      const container = document.getElementById('hero-food-preview');
+      container.innerHTML = previewKeys.map(k => {
+        const item = FOOD_ITEMS[k];
+        return `
+          <div class="showcase-photo-card">
+            <div class="food-photo-wrap">
+              <img src="${item.img}" alt="${item.name}" onerror="handleImgError(this, '${item.name}')">
+              <span class="photo-badge-tag">${item.priceLabel}</span>
+            </div>
+            <div class="label">${item.name}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderLevelMap() {
+      const grid = document.getElementById('levels-grid');
+      const completedCount = Object.values(gameState.completedLevels).filter(Boolean).length;
+      document.getElementById('map-progress-text').textContent = `${completedCount} / 6 Completed`;
+      document.getElementById('map-progress-fill').style.width = `${(completedCount / 6) * 100}%`;
+
+      grid.innerHTML = LEVELS_META.map(lvl => {
+        const unlocked = lvl.id <= gameState.unlockedLevel;
+        const completed = gameState.completedLevels[lvl.id];
+        const stars = gameState.levelStars[lvl.id] || 0;
+        const starStr = '★'.repeat(stars) + '☆'.repeat(3 - stars);
+
+        return `
+          <div class="level-card ${unlocked ? 'unlocked' : 'locked'} ${completed ? 'completed' : ''}">
+            <div>
+              <div class="level-top-row">
+                <span class="level-tag">${lvl.id === 6 ? 'Final Mission' : 'Level ' + lvl.id}</span>
+                <span class="level-stars" style="color:${stars > 0 ? '#F59E0B' : '#CBD5E1'};">${starStr}</span>
+              </div>
+              <h3>${lvl.title}</h3>
+              <p>${lvl.desc}</p>
+              <div class="level-skills">
+                ${lvl.skills.map(s => `<span class="skill-chip">${s}</span>`).join('')}
+              </div>
+            </div>
+            <div>
+              ${unlocked
+                ? `<button class="btn ${completed ? 'btn-blue' : 'btn-primary'}" style="width:100%;" onclick="startLevel(${lvl.id})">
+                    ${completed ? 'Play Again' : 'Start Mission'}
+                  </button>`
+                : `<button class="btn btn-secondary" style="width:100%;" disabled>Locked &bull; Complete Level ${lvl.id - 1}</button>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openBadgesModal() {
+      const grid = document.getElementById('badges-modal-grid');
+      grid.innerHTML = LEVELS_META.map(lvl => {
+        const earned = gameState.completedLevels[lvl.id];
+        return `
+          <div class="badge-tile ${earned ? 'earned' : ''}">
+            <div style="font-family:'Fredoka',sans-serif; font-size:1.3rem; font-weight:700; color:${earned ? '#B45309' : '#94A3B8'}; margin-bottom:6px;">
+              ${earned ? 'UNLOCKED' : 'LOCKED'}
+            </div>
+            <div style="font-weight:800; font-size:0.95rem; margin-bottom:4px;">${lvl.badgeName}</div>
+            <div style="font-size:0.78rem; color:var(--slate-600);">Level ${lvl.id}: ${lvl.title}</div>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('badges-modal').classList.add('open');
+    }
+
+    function closeBadgesModal() {
+      document.getElementById('badges-modal').classList.remove('open');
+    }
+
+    /* =========================================================================
+       5. LEVEL ENGINE & STEP ROUTER
+       ========================================================================= */
+    function startLevel(levelId) {
+      AudioFX.play('click');
+      const meta = LEVELS_META.find(l => l.id === levelId);
+      document.getElementById('play-level-badge').textContent = levelId === 6 ? 'Final Mission' : `Level ${levelId}`;
+      document.getElementById('play-level-title').textContent = meta.title;
+
+      activeSession = {
+        levelId,
+        stepIndex: 0,
+        mistakes: 0,
+        steps: buildStepsForLevel(levelId)
+      };
+
+      showScreen('play');
+      renderCurrentStep();
+    }
+
+    function buildStepsForLevel(levelId) {
+      if (levelId === 1) {
+        return [
+          {
+            type: 'photo_mcq',
+            foodId: 'fried_rice',
+            prompt: 'Look closely at this cafeteria dish. What is the correct English name and taste description?',
+            clue: 'Clue: Cooked in a wok with rice, scrambled egg, and vegetables.',
+            options: [
+              'Fried Rice — Savory and served hot',
+              'Garden Salad — Cold and crunchy',
+              'Chocolate Cake — Very sweet dessert',
+              'Meatballs — Boiled in clear soup'
+            ],
+            answer: 0,
+            explanation: 'Correct! Fried Rice is a savory hot main meal cooked with egg and vegetables.'
+          },
+          {
+            type: 'photo_mcq',
+            foodId: 'meatballs',
+            prompt: 'Identify this popular hot bowl from the school canteen.',
+            clue: 'Clue: Round beef spheres served steaming in savory broth.',
+            options: [
+              'Banana — Sweet yellow fruit',
+              'Meatballs — Hot and savory broth dish',
+              'Iced Tea — Chilled sweet beverage',
+              'Cake — Baked sweet pastry'
+            ],
+            answer: 1,
+            explanation: 'Well done! Meatballs (Bakso) are served hot and have a rich savory flavor.'
+          },
+          {
+            type: 'photo_mcq',
+            foodId: 'salad',
+            prompt: 'Which statement accurately describes the food in this photograph?',
+            clue: 'Clue: Fresh raw vegetables served chilled in a bowl.',
+            options: [
+              'Hot Tea — Hot and bitter drink',
+              'Spicy Chilli — Fiery hot pepper dish',
+              'Salad — Fresh, crisp, and served cool',
+              'Fried Rice — Oily and spicy grain dish'
+            ],
+            answer: 2,
+            explanation: 'Spot on! Salad is made of fresh, crisp vegetables and is served cool.'
+          },
+          {
+            type: 'photo_mcq',
+            foodId: 'iced_tea',
+            prompt: 'Look at the glass in the photo. What drink is this and what is its temperature?',
+            clue: 'Clue: Amber tea served with ice cubes and lemon.',
+            options: [
+              'Hot Tea — Steaming hot in a mug',
+              'Iced Tea — Cold and refreshing',
+              'Banana Smoothie — Thick and warm',
+              'Beef Broth — Salty and hot'
+            ],
+            answer: 1,
+            explanation: 'Great eye! Iced Tea is served cold with ice cubes to cool you down.'
+          },
+          {
+            type: 'photo_match',
+            prompt: 'Match all 4 real food photos on the left with their exact English description on the right!',
+            pairs: [
+              { foodId: 'banana', desc: 'Banana: Naturally sweet fruit at room temperature' },
+              { foodId: 'cake', desc: 'Cake: Very sweet frosted treat for special occasions' },
+              { foodId: 'hot_tea', desc: 'Hot Tea: Warm, soothing drink in a ceramic cup' },
+              { foodId: 'chilli', desc: 'Spicy Chilli Dish: Very spicy and hot meal' }
+            ]
+          }
+        ];
+      }
+
+      if (levelId === 2) {
+        return [
+          {
+            type: 'drag_sort',
+            prompt: 'Drag each realistic food card (or tap a food card, then tap a category box) into the right nutrition group!',
+            items: [
+              { foodId: 'banana', target: 'healthy' },
+              { foodId: 'salad', target: 'healthy' },
+              { foodId: 'hot_tea', target: 'healthy' },
+              { foodId: 'fried_rice', target: 'energy' },
+              { foodId: 'meatballs', target: 'energy' },
+              { foodId: 'cake', target: 'treats' }
+            ]
+          },
+          {
+            type: 'true_false',
+            foodId: 'salad',
+            statement: '“Eating fresh Salad and Bananas gives students vitamins, fiber, and steady energy for afternoon classes.”',
+            answer: true,
+            explanation: 'True! Fruits and vegetables provide essential vitamins and fiber without excess sugar.'
+          },
+          {
+            type: 'true_false',
+            foodId: 'cake',
+            statement: '“Sweet frosted Cake should replace main meals like Fried Rice or Meatballs every single day.”',
+            answer: false,
+            explanation: 'False! Cake is high in sugar and should only be eaten as an occasional treat, not a daily main meal.'
+          },
+          {
+            type: 'true_false',
+            foodId: 'hot_tea',
+            statement: '“Unsweetened or lightly sweetened Hot Tea is a healthier hydration choice than sugary desserts.”',
+            answer: true,
+            explanation: 'True! Tea hydrates the body without loading you with heavy fats and excess sugar.'
+          }
+        ];
+      }
+
+      if (levelId === 3) {
+        return [
+          {
+            type: 'price_match',
+            prompt: 'Study the Canteen Menu Board above, then match each food photograph to its exact price tag!',
+            pairs: [
+              { foodId: 'banana', desc: 'Rp 3.000' },
+              { foodId: 'iced_tea', desc: 'Rp 5.000' },
+              { foodId: 'salad', desc: 'Rp 9.000' },
+              { foodId: 'fried_rice', desc: 'Rp 12.000' }
+            ]
+          },
+          {
+            type: 'budget_mcq',
+            prompt: 'Comparison Puzzle 1: You want a healthy snack and a warm drink, and you only have Rp 8.000. Which combo fits your budget?',
+            options: [
+              'Banana (Rp 3.000) + Hot Tea (Rp 4.000) = Rp 7.000',
+              'Fried Rice (Rp 12.000) + Iced Tea (Rp 5.000) = Rp 17.000',
+              'Cake (Rp 8.000) + Hot Tea (Rp 4.000) = Rp 12.000',
+              'Meatballs (Rp 10.000) + Banana (Rp 3.000) = Rp 13.000'
+            ],
+            answer: 0,
+            explanation: 'Correct! Rp 3.000 + Rp 4.000 = Rp 7.000, leaving Rp 1.000 in change!'
+          },
+          {
+            type: 'budget_mcq',
+            prompt: 'Comparison Puzzle 2: Which option is BOTH cheaper and healthier than buying Cake (Rp 8.000) + Iced Tea (Rp 5.000)?',
+            options: [
+              'Salad (Rp 9.000) + Hot Tea (Rp 4.000) — Equal price (Rp 13.000) and packed with fresh vitamins',
+              'Banana (Rp 3.000) + Hot Tea (Rp 4.000) — Only Rp 7.000 and naturally nutritious',
+              'Fried Rice (Rp 12.000) + Iced Tea (Rp 5.000) — Costs Rp 17.000',
+              'Meatballs (Rp 10.000) + Cake (Rp 8.000) — Costs Rp 18.000'
+            ],
+            answer: 1,
+            explanation: 'Awesome! Banana + Hot Tea costs only Rp 7.000 (saving Rp 6.000) and avoids heavy added sugar.'
+          }
+        ];
+      }
+
+      if (levelId === 4) {
+        return [
+          {
+            type: 'scenario',
+            studentName: 'Maya (Grade 7A)',
+            moodTag: 'Rainy Day & Cold',
+            quote: '“Brrr! It is raining outside and I feel chilly. I have Rp 15.000 and want a hot, savory meal with a warm drink.”',
+            budget: 15000,
+            choices: [
+              {
+                label: 'Meatballs (Rp 10.000) + Hot Tea (Rp 4.000)',
+                total: 14000,
+                foods: ['meatballs', 'hot_tea'],
+                correct: true,
+                feedback: 'Perfect match! Hot Meatballs and Hot Tea total Rp 14.000 (under Rp 15.000) and keep Maya warm.'
+              },
+              {
+                label: 'Salad (Rp 9.000) + Iced Tea (Rp 5.000)',
+                total: 14000,
+                foods: ['salad', 'iced_tea'],
+                correct: false,
+                feedback: 'Both Salad and Iced Tea are cold! Maya specifically asked for a hot meal and warm drink.'
+              },
+              {
+                label: 'Fried Rice (Rp 12.000) + Iced Tea (Rp 5.000)',
+                total: 17000,
+                foods: ['fried_rice', 'iced_tea'],
+                correct: false,
+                feedback: 'Over budget (Rp 17.000 > Rp 15.000), and Iced Tea is cold!'
+              }
+            ]
+          },
+          {
+            type: 'scenario',
+            studentName: 'Leo (Grade 7B)',
+            moodTag: 'After PE Basketball',
+            quote: '“I just finished basketball practice! I am super hot and want something cold, fresh, and healthy under Rp 15.000.”',
+            budget: 15000,
+            choices: [
+              {
+                label: 'Spicy Chilli Dish (Rp 11.000) + Hot Tea (Rp 4.000)',
+                total: 15000,
+                foods: ['chilli', 'hot_tea'],
+                correct: false,
+                feedback: 'Spicy food and Hot Tea will make Leo even hotter after basketball!'
+              },
+              {
+                label: 'Salad (Rp 9.000) + Iced Tea (Rp 5.000)',
+                total: 14000,
+                foods: ['salad', 'iced_tea'],
+                correct: true,
+                feedback: 'Great advice! Chilled Garden Salad and Iced Tea cost Rp 14.000 and cool Leo down healthily.'
+              },
+              {
+                label: 'Cake (Rp 8.000) + Cake (Rp 8.000)',
+                total: 16000,
+                foods: ['cake', 'cake'],
+                correct: false,
+                feedback: 'Two slices of cake exceed Rp 15.000 and lack the fresh nutrition Leo needs.'
+              }
+            ]
+          },
+          {
+            type: 'scenario',
+            studentName: 'Siti (Grade 7C)',
+            moodTag: 'Quick Pocket-Money Snack',
+            quote: '“I ate breakfast at home, so I only need a light, healthy fruit snack before English class. My budget is Rp 5.000.”',
+            budget: 5000,
+            choices: [
+              {
+                label: 'Banana (Rp 3.000)',
+                total: 3000,
+                foods: ['banana'],
+                correct: true,
+                feedback: 'Spot on! A ripe Banana is Rp 3.000, healthy, quick to eat, and leaves Rp 2.000 change.'
+              },
+              {
+                label: 'Cake (Rp 8.000)',
+                total: 8000,
+                foods: ['cake'],
+                correct: false,
+                feedback: 'Cake costs Rp 8.000, which is above Siti’s Rp 5.000 pocket money.'
+              },
+              {
+                label: 'Meatballs (Rp 10.000)',
+                total: 10000,
+                foods: ['meatballs'],
+                correct: false,
+                feedback: 'Meatballs are too heavy and cost twice Siti’s Rp 5.000 budget.'
+              }
+            ]
+          },
+          {
+            type: 'scenario',
+            studentName: 'Kevin (Grade 7D)',
+            moodTag: 'Loves Spicy Food',
+            quote: '“I love spicy flavors! Can you recommend a hot, spicy dish with a cold drink for Rp 16.000 total?”',
+            budget: 16000,
+            choices: [
+              {
+                label: 'Spicy Chilli Dish (Rp 11.000) + Iced Tea (Rp 5.000)',
+                total: 16000,
+                foods: ['chilli', 'iced_tea'],
+                correct: true,
+                feedback: 'Bullseye! Spicy Chilli Dish (Rp 11.000) + Iced Tea (Rp 5.000) = exactly Rp 16.000!'
+              },
+              {
+                label: 'Banana (Rp 3.000) + Hot Tea (Rp 4.000)',
+                total: 7000,
+                foods: ['banana', 'hot_tea'],
+                correct: false,
+                feedback: 'Neither Banana nor Hot Tea is spicy!'
+              },
+              {
+                label: 'Salad (Rp 9.000) + Hot Tea (Rp 4.000)',
+                total: 13000,
+                foods: ['salad', 'hot_tea'],
+                correct: false,
+                feedback: 'Salad is crisp and mild, not spicy, and Hot Tea is not a cold drink.'
+              }
+            ]
+          }
+        ];
+      }
+
+      if (levelId === 5) {
+        return [
+          {
+            type: 'judge_agree',
+            foodId: 'banana',
+            statement: '“Bananas and fresh Garden Salad are smart canteen choices because they provide natural nutrients without excessive sugar.”',
+            agree: true,
+            explanation: 'I Agree! Fruits and vegetables keep students energized and focused during lessons.'
+          },
+          {
+            type: 'judge_agree',
+            foodId: 'iced_tea',
+            statement: '“Iced Tea is served steaming hot and tastes very salty like beef soup.”',
+            agree: false,
+            explanation: 'I Disagree! Iced Tea is served cold with ice cubes and has a refreshing, lightly sweet tea flavor.'
+          },
+          {
+            type: 'spot_mistake',
+            prompt: 'Spot the Mistake! Tap the ONE incorrect word in this canteen report sentence:',
+            words: ['Fresh', 'Garden', 'Salad', 'is', 'always', 'served', 'boiling', 'hot', 'with', 'ice', 'cubes.'],
+            wrongIndex: 6,
+            correction: 'Garden Salad is served chilled/cool, not "boiling" hot!'
+          },
+          {
+            type: 'spot_mistake',
+            prompt: 'Spot the Mistake! Tap the ONE word that makes this nutrition advice false:',
+            words: ['Eating', 'sweet', 'frosted', 'Cake', 'for', 'every', 'meal', 'is', 'the', 'healthiest', 'habit.'],
+            wrongIndex: 9,
+            correction: 'Cake is an occasional treat, definitely not the "healthiest" daily meal!'
+          }
+        ];
+      }
+
+      if (levelId === 6) {
+        return [
+          {
+            type: 'final_builder',
+            budget: 15000
+          }
+        ];
+      }
+      return [];
+    }
+
+    function renderCurrentStep() {
+      const { levelId, stepIndex, steps } = activeSession;
+      const step = steps[stepIndex];
+      const workspace = document.getElementById('play-workspace');
+      const fb = document.getElementById('feedback-banner');
+      fb.className = 'feedback-banner';
+      fb.style.display = 'none';
+
+      // Update step dots & counter
+      document.getElementById('play-step-counter').textContent = `Task ${stepIndex + 1} / ${steps.length}`;
+      document.getElementById('play-step-dots').innerHTML = steps.map((_, idx) => {
+        const cls = idx < stepIndex ? 'done' : idx === stepIndex ? 'current' : '';
+        return `<div class="step-dot ${cls}"></div>`;
+      }).join('');
+
+      if (step.type === 'photo_mcq') {
+        const food = FOOD_ITEMS[step.foodId];
+        workspace.innerHTML = `
+          <div class="detective-grid">
+            <div class="detective-photo-frame">
+              <div class="food-photo-wrap">
+                <img src="${food.img}" alt="Mystery Canteen Food" onerror="handleImgError(this, '${food.name}')">
+                <span class="photo-badge-tag">Canteen Photo Evidence</span>
+              </div>
+            </div>
+            <div>
+              <h3 style="font-size:1.35rem; margin-bottom:10px;">${step.prompt}</h3>
+              <div class="clue-box">${step.clue}</div>
+              <div class="options-grid">
+                ${step.options.map((opt, idx) => `
+                  <button class="option-btn" id="mcq-opt-${idx}" onclick="submitMCQ(${idx})">
+                    <span style="background:var(--blue-100); color:var(--blue-700); width:28px; height:28px; border-radius:8px; display:grid; place-items:center; flex-shrink:0;">
+                      ${String.fromCharCode(65 + idx)}
+                    </span>
+                    <span>${opt}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (step.type === 'photo_match' || step.type === 'price_match') {
+        const isPrice = step.type === 'price_match';
+        const shuffledRight = [...step.pairs].sort(() => Math.random() - 0.5);
+        activeSession.matchState = {
+          selectedLeft: null,
+          selectedRight: null,
+          matchedIds: new Set()
+        };
+
+        workspace.innerHTML = `
+          ${isPrice ? renderMiniMenuBoard() : ''}
+          <h3 style="font-size:1.25rem; margin-bottom:6px;">${step.prompt}</h3>
+          <p style="color:var(--slate-600); font-size:0.9rem; margin-bottom:14px;">Click one food photo on the left, then click its matching ${isPrice ? 'price tag' : 'description'} on the right.</p>
+          <div class="match-columns">
+            <div id="match-left-col">
+              ${step.pairs.map(p => {
+                const f = FOOD_ITEMS[p.foodId];
+                return `
+                  <div class="match-item" id="m-left-${p.foodId}" onclick="selectMatchLeft('${p.foodId}')">
+                    <img class="match-thumb" src="${f.img}" alt="${f.name}" onerror="handleImgError(this, '${f.name}')">
+                    <div>
+                      <div style="font-size:1rem;">${f.name}</div>
+                      <div style="font-size:0.78rem; color:var(--slate-600);">Tap to select</div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+            <div id="match-right-col">
+              ${shuffledRight.map(p => `
+                <div class="match-item" id="m-right-${p.foodId}" onclick="selectMatchRight('${p.foodId}')">
+                  <div style="font-size:${isPrice ? '1.15rem' : '0.94rem'}; color:${isPrice ? '#92400E' : 'var(--slate-800)'};">
+                    ${p.desc}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (step.type === 'drag_sort') {
+        activeSession.sortState = {
+          selectedFoodId: null,
+          placements: {}
+        };
+        workspace.innerHTML = `
+          <h3 style="font-size:1.25rem; margin-bottom:6px;">${step.prompt}</h3>
+          <p style="color:var(--slate-600); font-size:0.88rem; margin-bottom:14px;">
+            Desktop: Drag & drop food photos into the boxes below. Mobile/Tablet: Tap a food card, then tap its category box.
+          </p>
+          <div class="lab-tray" id="lab-source-tray" ondragover="event.preventDefault()" ondrop="handleDropToZone(event, 'tray')">
+            ${step.items.map(it => renderDraggableFoodCard(it.foodId)).join('')}
+          </div>
+          <div class="drop-zones-grid">
+            <div class="drop-zone healthy" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDropToZone(event, 'healthy')" onclick="handleTapZone('healthy')">
+              <div class="drop-zone-header" style="color:var(--mint-700);">Healthy Everyday Foods</div>
+              <div class="drop-zone-sub">Rich in vitamins, fiber & natural hydration</div>
+              <div class="dropped-list" id="zone-list-healthy"></div>
+            </div>
+            <div class="drop-zone energy" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDropToZone(event, 'energy')" onclick="handleTapZone('energy')">
+              <div class="drop-zone-header" style="color:var(--blue-700);">Hearty Energy Meals</div>
+              <div class="drop-zone-sub">Warm main dishes with carbs & protein</div>
+              <div class="dropped-list" id="zone-list-energy"></div>
+            </div>
+            <div class="drop-zone treats" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDropToZone(event, 'treats')" onclick="handleTapZone('treats')">
+              <div class="drop-zone-header" style="color:var(--orange-600);">Occasional Sweet Treats</div>
+              <div class="drop-zone-sub">Higher sugar foods to enjoy in moderation</div>
+              <div class="dropped-list" id="zone-list-treats"></div>
+            </div>
+          </div>
+          <div style="margin-top:18px; display:flex; justify-content:flex-end;">
+            <button class="btn btn-primary" onclick="checkDragSort()">Check Lab Categories</button>
+          </div>
+        `;
+      } else if (step.type === 'true_false' || step.type === 'judge_agree') {
+        const food = FOOD_ITEMS[step.foodId];
+        const isJudge = step.type === 'judge_agree';
+        workspace.innerHTML = `
+          <div class="detective-grid">
+            <div class="detective-photo-frame">
+              <div class="food-photo-wrap">
+                <img src="${food.img}" alt="${food.name}" onerror="handleImgError(this, '${food.name}')">
+                <span class="photo-badge-tag">${food.name}</span>
+              </div>
+            </div>
+            <div>
+              <div class="stage-badge" style="display:inline-block; margin-bottom:10px;">
+                ${isJudge ? 'Canteen Judge Case' : 'Nutrition Fact Check'}
+              </div>
+              <h3 style="font-size:1.35rem; line-height:1.45; margin-bottom:20px;">${step.statement}</h3>
+              <div class="options-grid">
+                <button class="option-btn" id="tf-btn-true" onclick="submitBoolean(true)">
+                  <span style="color:var(--mint-700); font-size:1.2rem;">&#10004;</span>
+                  <span>${isJudge ? 'I Agree (Accurate)' : 'TRUE'}</span>
+                </button>
+                <button class="option-btn" id="tf-btn-false" onclick="submitBoolean(false)">
+                  <span style="color:var(--red-500); font-size:1.2rem;">&#10008;</span>
+                  <span>${isJudge ? 'I Disagree (Inaccurate)' : 'FALSE'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (step.type === 'budget_mcq') {
+        workspace.innerHTML = `
+          ${renderMiniMenuBoard()}
+          <h3 style="font-size:1.25rem; margin-bottom:14px;">${step.prompt}</h3>
+          <div class="options-grid">
+            ${step.options.map((opt, idx) => `
+              <button class="option-btn" id="mcq-opt-${idx}" onclick="submitMCQ(${idx})">
+                <span style="background:var(--orange-100); color:var(--orange-600); width:28px; height:28px; border-radius:8px; display:grid; place-items:center; flex-shrink:0;">
+                  ${String.fromCharCode(65 + idx)}
+                </span>
+                <span>${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+        `;
+      } else if (step.type === 'scenario') {
+        workspace.innerHTML = `
+          <div class="student-scenario-card">
+            <div class="student-avatar-box">
+              <div style="text-align:center;">
+                <div style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:1.3rem; color:var(--blue-700);">
+                  ${step.studentName.split(' ')[0]}
+                </div>
+                <div style="font-size:0.72rem; font-weight:800; color:var(--slate-600);">Grade 7</div>
+              </div>
+            </div>
+            <div class="speech-bubble">
+              <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                <strong style="font-size:1.05rem;">${step.studentName}</strong>
+                <span class="skill-chip">${step.moodTag}</span>
+              </div>
+              <p style="font-size:1.02rem; line-height:1.5; color:var(--slate-800);">${step.quote}</p>
+              <span class="budget-pill">Max Budget: Rp ${step.budget.toLocaleString('id-ID')}</span>
+            </div>
+          </div>
+
+          <h3 style="font-size:1.15rem; margin-bottom:12px;">Choose the best lunch tray for ${step.studentName.split(' ')[0]}:</h3>
+          <div class="levels-grid" style="grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));">
+            ${step.choices.map((ch, idx) => `
+              <div class="info-card food-card-interactive" id="scen-choice-${idx}" style="cursor:pointer; border-width:3px;" onclick="submitScenario(${idx})">
+                <div style="display:grid; grid-template-columns: repeat(${ch.foods.length}, 1fr); gap:8px; margin-bottom:12px;">
+                  ${ch.foods.map(fid => {
+                    const f = FOOD_ITEMS[fid];
+                    return `
+                      <div class="food-photo-wrap" style="height:115px;">
+                        <img src="${f.img}" alt="${f.name}" onerror="handleImgError(this, '${f.name}')">
+                        <span class="photo-badge-tag">${f.priceLabel}</span>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+                <div style="font-weight:800; font-size:0.98rem; margin-bottom:6px;">${ch.label}</div>
+                <div style="font-size:0.82rem; font-weight:700; color:var(--blue-700);">Tap to Recommend This Tray</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (step.type === 'spot_mistake') {
+        activeSession.selectedWordIdx = null;
+        workspace.innerHTML = `
+          <h3 style="font-size:1.28rem; margin-bottom:6px;">${step.prompt}</h3>
+          <p style="color:var(--slate-600); font-size:0.9rem;">Click the word that does not belong, then press "Submit Judgment".</p>
+          <div class="sentence-tokens">
+            ${step.words.map((w, idx) => `
+              <button type="button" class="word-token" id="wtok-${idx}" onclick="selectMistakeWord(${idx})">${w}</button>
+            `).join('')}
+          </div>
+          <button class="btn btn-orange" onclick="submitMistakeSpot()">Submit Judgment</button>
+        `;
+      } else if (step.type === 'final_builder') {
+        activeSession.finalSelection = new Set();
+        renderFinalBuilder();
+      }
+    }
+
+    function renderMiniMenuBoard() {
+      const items = Object.values(FOOD_ITEMS);
+      return `
+        <div style="background:var(--bg-cream); border:2px solid var(--yellow-400); border-radius:22px; padding:16px; margin-bottom:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <strong style="font-family:'Fredoka',sans-serif; font-size:1.15rem; color:var(--slate-800);">School Canteen Menu Board</strong>
+            <span style="font-size:0.8rem; font-weight:800; color:var(--orange-600);">Fresh Daily Prices</span>
+          </div>
+          <div class="menu-board-grid" style="margin-bottom:0;">
+            ${items.map(f => `
+              <div class="menu-item-card">
+                <img class="menu-item-photo" src="${f.img}" alt="${f.name}" onerror="handleImgError(this, '${f.name}')">
+                <div class="menu-item-info">
+                  <div class="menu-item-top">
+                    <span class="menu-item-name">${f.name}</span>
+                    <span class="menu-price-tag">${f.priceLabel}</span>
+                  </div>
+                  <div class="menu-item-desc">${f.desc}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       6. INTERACTION HANDLERS FOR EACH ASSESSMENT TYPE
+       ========================================================================= */
+    function submitMCQ(chosenIdx) {
+      const step = activeSession.steps[activeSession.stepIndex];
+      const buttons = document.querySelectorAll('.option-btn');
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIdx === step.answer) {
+        document.getElementById(`mcq-opt-${chosenIdx}`).classList.add('correct');
+        AudioFX.play('correct');
+        showFeedback(true, step.explanation);
+      } else {
+        document.getElementById(`mcq-opt-${chosenIdx}`).classList.add('wrong');
+        activeSession.mistakes++;
+        AudioFX.play('wrong');
+        showFeedback(false, 'Not quite! Look closely at the photograph and clue, then try again.', true);
+      }
+    }
+
+    function submitBoolean(val) {
+      const step = activeSession.steps[activeSession.stepIndex];
+      const expected = step.type === 'judge_agree' ? step.agree : step.answer;
+      document.getElementById('tf-btn-true').disabled = true;
+      document.getElementById('tf-btn-false').disabled = true;
+
+      if (val === expected) {
+        document.getElementById(val ? 'tf-btn-true' : 'tf-btn-false').classList.add('correct');
+        AudioFX.play('correct');
+        showFeedback(true, step.explanation);
+      } else {
+        document.getElementById(val ? 'tf-btn-true' : 'tf-btn-false').classList.add('wrong');
+        activeSession.mistakes++;
+        AudioFX.play('wrong');
+        showFeedback(false, 'Think again! Re-read the statement carefully and compare it with the food photo.', true);
+      }
+    }
+
+    /* Matching Handlers */
+    function selectMatchLeft(foodId) {
+      if (activeSession.matchState.matchedIds.has(foodId)) return;
+      AudioFX.play('click');
+      document.querySelectorAll('#match-left-col .match-item').forEach(el => el.classList.remove('selected'));
+      document.getElementById(`m-left-${foodId}`).classList.add('selected');
+      activeSession.matchState.selectedLeft = foodId;
+      checkMatchPair();
+    }
+
+    function selectMatchRight(foodId) {
+      if (activeSession.matchState.matchedIds.has(foodId)) return;
+      AudioFX.play('click');
+      document.querySelectorAll('#match-right-col .match-item').forEach(el => el.classList.remove('selected'));
+      document.getElementById(`m-right-${foodId}`).classList.add('selected');
+      activeSession.matchState.selectedRight = foodId;
+      checkMatchPair();
+    }
+
+    function checkMatchPair() {
+      const st = activeSession.matchState;
+      if (!st.selectedLeft || !st.selectedRight) return;
+
+      const step = activeSession.steps[activeSession.stepIndex];
+      if (st.selectedLeft === st.selectedRight) {
+        AudioFX.play('correct');
+        st.matchedIds.add(st.selectedLeft);
+        const lEl = document.getElementById(`m-left-${st.selectedLeft}`);
+        const rEl = document.getElementById(`m-right-${st.selectedRight}`);
+        lEl.classList.remove('selected');
+        rEl.classList.remove('selected');
+        lEl.classList.add('matched');
+        rEl.classList.add('matched');
+        st.selectedLeft = null;
+        st.selectedRight = null;
+
+        if (st.matchedIds.size === step.pairs.length) {
+          showFeedback(true, 'All 4 food photographs matched accurately! Great job.');
+        }
+      } else {
+        AudioFX.play('wrong');
+        activeSession.mistakes++;
+        const lEl = document.getElementById(`m-left-${st.selectedLeft}`);
+        const rEl = document.getElementById(`m-right-${st.selectedRight}`);
+        lEl.style.borderColor = 'var(--red-500)';
+        rEl.style.borderColor = 'var(--red-500)';
+        setTimeout(() => {
+          lEl.classList.remove('selected');
+          rEl.classList.remove('selected');
+          lEl.style.borderColor = '';
+          rEl.style.borderColor = '';
+        }, 450);
+        st.selectedLeft = null;
+        st.selectedRight = null;
+      }
+    }
+
+    /* Drag & Drop + Tap-to-Sort Handlers */
+    function renderDraggableFoodCard(foodId) {
+      const f = FOOD_ITEMS[foodId];
+      return `
+        <div class="draggable-food" id="drag-card-${foodId}" draggable="true"
+             ondragstart="handleDragStart(event, '${foodId}')"
+             onclick="event.stopPropagation(); handleTapFoodCard('${foodId}')">
+          <img src="${f.img}" alt="${f.name}" onerror="handleImgError(this, '${f.name}')">
+          <span>${f.name}</span>
+        </div>
+      `;
+    }
+
+    function handleDragStart(e, foodId) {
+      e.dataTransfer.setData('text/plain', foodId);
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleDropToZone(e, zoneName) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      const foodId = e.dataTransfer.getData('text/plain');
+      if (foodId) moveFoodCardToZone(foodId, zoneName);
+    }
+
+    function handleTapFoodCard(foodId) {
+      AudioFX.play('click');
+      document.querySelectorAll('.draggable-food').forEach(el => el.classList.remove('selected-tap'));
+      if (activeSession.sortState.selectedFoodId === foodId) {
+        activeSession.sortState.selectedFoodId = null;
+        return;
+      }
+      activeSession.sortState.selectedFoodId = foodId;
+      document.getElementById(`drag-card-${foodId}`).classList.add('selected-tap');
+    }
+
+    function handleTapZone(zoneName) {
+      const foodId = activeSession.sortState.selectedFoodId;
+      if (!foodId) return;
+      moveFoodCardToZone(foodId, zoneName);
+      activeSession.sortState.selectedFoodId = null;
+      document.querySelectorAll('.draggable-food').forEach(el => el.classList.remove('selected-tap'));
+    }
+
+    function moveFoodCardToZone(foodId, zoneName) {
+      AudioFX.play('click');
+      const card = document.getElementById(`drag-card-${foodId}`);
+      if (!card) return;
+      if (zoneName === 'tray') {
+        document.getElementById('lab-source-tray').appendChild(card);
+        delete activeSession.sortState.placements[foodId];
+      } else {
+        document.getElementById(`zone-list-${zoneName}`).appendChild(card);
+        activeSession.sortState.placements[foodId] = zoneName;
+      }
+    }
+
+    function checkDragSort() {
+      const step = activeSession.steps[activeSession.stepIndex];
+      const placements = activeSession.sortState.placements;
+      if (Object.keys(placements).length < step.items.length) {
+        AudioFX.play('wrong');
+        showFeedback(false, 'Please place all 6 food cards into a category box before checking!', false);
+        return;
+      }
+
+      let allRight = true;
+      step.items.forEach(it => {
+        const card = document.getElementById(`drag-card-${it.foodId}`);
+        if (placements[it.foodId] === it.target) {
+          card.style.borderColor = 'var(--mint-500)';
+        } else {
+          card.style.borderColor = 'var(--red-500)';
+          allRight = false;
+        }
+      });
+
+      if (allRight) {
+        AudioFX.play('correct');
+        showFeedback(true, 'Spotless lab work! Every food item is sorted into its proper nutrition group.');
+      } else {
+        AudioFX.play('wrong');
+        activeSession.mistakes++;
+        showFeedback(false, 'Items outlined in red are in the wrong box. Drag or tap them to move them to the right group!', false);
+      }
+    }
+
+    /* Scenario Handler */
+    function submitScenario(idx) {
+      const step = activeSession.steps[activeSession.stepIndex];
+      const choice = step.choices[idx];
+      document.querySelectorAll('[id^="scen-choice-"]').forEach(el => {
+        el.style.pointerEvents = 'none';
+      });
+
+      const card = document.getElementById(`scen-choice-${idx}`);
+      if (choice.correct) {
+        card.style.borderColor = 'var(--mint-500)';
+        card.style.background = 'var(--mint-50)';
+        AudioFX.play('correct');
+        showFeedback(true, choice.feedback);
+      } else {
+        card.style.borderColor = 'var(--red-500)';
+        card.style.background = 'var(--red-100)';
+        activeSession.mistakes++;
+        AudioFX.play('wrong');
+        showFeedback(false, choice.feedback, true);
+      }
+    }
+
+    /* Spot-the-Mistake Handler */
+    function selectMistakeWord(idx) {
+      AudioFX.play('click');
+      activeSession.selectedWordIdx = idx;
+      document.querySelectorAll('.word-token').forEach(el => el.classList.remove('selected-mistake'));
+      document.getElementById(`wtok-${idx}`).classList.add('selected-mistake');
+    }
+
+    function submitMistakeSpot() {
+      const step = activeSession.steps[activeSession.stepIndex];
+      if (activeSession.selectedWordIdx === null) {
+        showFeedback(false, 'Tap one word in the sentence first!', false);
+        return;
+      }
+      if (activeSession.selectedWordIdx === step.wrongIndex) {
+        AudioFX.play('correct');
+        showFeedback(true, `Sharp judgment! ${step.correction}`);
+      } else {
+        AudioFX.play('wrong');
+        activeSession.mistakes++;
+        showFeedback(false, 'That word is fine. Look for the word that makes the food description untrue!', false);
+      }
+    }
+
+    /* Final Mission: Interactive Menu Builder & Writing Task */
+    function renderFinalBuilder() {
+      const workspace = document.getElementById('play-workspace');
+      const items = Object.values(FOOD_ITEMS);
+
+      workspace.innerHTML = `
+        <div class="student-scenario-card" style="margin-bottom:18px;">
+          <div class="student-avatar-box">
+            <div style="text-align:center;">
+              <div style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:1.1rem; color:var(--mint-700);">Coach</div>
+              <div style="font-size:0.75rem; font-weight:800;">Alex</div>
+            </div>
+          </div>
+          <div class="speech-bubble">
+            <strong>Final Advisor Challenge — Coach Alex’s Healthy Lunch</strong>
+            <p style="font-size:0.95rem; margin-top:4px; color:var(--slate-600);">
+              “Design a balanced, healthy lunch combo for me! Pick <strong>1 healthy food</strong> and <strong>1 healthy drink</strong> from the Menu Board within my <strong>Rp 15.000</strong> budget, then write your English recommendation.”
+            </p>
+          </div>
+        </div>
+
+        <div class="final-layout">
+          <div>
+            <h3 style="font-size:1.15rem; margin-bottom:10px;">1. Click Menu Items to Add to Tray:</h3>
+            <div class="menu-board-grid">
+              ${items.map(f => `
+                <div class="menu-item-card selectable" id="final-item-${f.id}" onclick="toggleFinalItem('${f.id}')">
+                  <img class="menu-item-photo" src="${f.img}" alt="${f.name}" onerror="handleImgError(this, '${f.name}')">
+                  <div class="menu-item-info">
+                    <div class="menu-item-top">
+                      <span class="menu-item-name">${f.name}</span>
+                      <span class="menu-price-tag">${f.priceLabel}</span>
+                    </div>
+                    <div class="menu-item-desc">${f.desc}</div>
+                    <div style="margin-top:6px; font-size:0.75rem; font-weight:800; color:${f.healthy ? 'var(--mint-700)' : 'var(--orange-600)'};">
+                      ${f.isDrink ? 'Drink' : 'Food'} &bull; ${f.healthy ? 'Healthy Choice' : 'Occasional Treat'}
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="writing-builder-box">
+              <h3 style="font-size:1.15rem; margin-bottom:8px;">2. Complete Your English Recommendation:</h3>
+              <div style="font-size:1.02rem; font-weight:700; line-height:2.2;">
+                “I recommend
+                <select id="rec-food-1" onchange="syncFinalPreview()">
+                  <option value="">-- select food --</option>
+                  ${items.filter(i => !i.isDrink).map(i => `<option value="${i.name}">${i.name}</option>`).join('')}
+                </select>
+                and
+                <select id="rec-food-2" onchange="syncFinalPreview()">
+                  <option value="">-- select drink --</option>
+                  ${items.filter(i => i.isDrink).map(i => `<option value="${i.name}">${i.name}</option>`).join('')}
+                </select>
+                because
+                <input type="text" id="rec-reason" placeholder="e.g., they are healthy, fresh, and under budget" style="width:100%; max-width:360px;" oninput="syncFinalPreview()">.”
+              </div>
+            </div>
+          </div>
+
+          <div class="receipt-panel">
+            <h3 style="font-size:1.25rem; border-bottom:2px dashed #CBD5E1; padding-bottom:10px; margin-bottom:12px;">
+              Advisor Tray Receipt
+            </h3>
+            <div id="final-tray-list" style="min-height:80px; margin-bottom:12px; font-size:0.92rem; color:var(--slate-600);">
+              No items selected yet. Click items on the left!
+            </div>
+
+            <div style="border-top:2px solid #E2E8F0; padding-top:10px; margin-bottom:12px;">
+              <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.05rem;">
+                <span>Total Price:</span>
+                <span id="final-total-price" style="color:var(--mint-700);">Rp 0</span>
+              </div>
+              <div style="font-size:0.8rem; color:var(--slate-600); text-align:right;">Budget Limit: Rp 15.000</div>
+            </div>
+
+            <div id="final-checklist" style="font-size:0.84rem; display:grid; gap:6px; margin-bottom:16px;">
+              <div id="chk-food">&#9744; Includes 1 healthy food</div>
+              <div id="chk-drink">&#9744; Includes 1 healthy drink</div>
+              <div id="chk-budget">&#9744; Total is Rp 15.000 or less</div>
+              <div id="chk-writing">&#9744; Recommendation sentence completed</div>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%;" onclick="submitFinalMission()">Complete Final Mission</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleFinalItem(foodId) {
+      AudioFX.play('click');
+      const sel = activeSession.finalSelection;
+      if (sel.has(foodId)) {
+        sel.delete(foodId);
+        document.getElementById(`final-item-${foodId}`).classList.remove('picked');
+      } else {
+        sel.add(foodId);
+        document.getElementById(`final-item-${foodId}`).classList.add('picked');
+      }
+      updateFinalReceipt();
+    }
+
+    function syncFinalPreview() {
+      updateFinalReceipt();
+    }
+
+    function updateFinalReceipt() {
+      const selIds = Array.from(activeSession.finalSelection);
+      const listEl = document.getElementById('final-tray-list');
+      let total = 0;
+
+      if (selIds.length === 0) {
+        listEl.innerHTML = 'No items selected yet. Click items on the left!';
+      } else {
+        listEl.innerHTML = selIds.map(id => {
+          const f = FOOD_ITEMS[id];
+          total += f.price;
+          return `<div style="display:flex; justify-content:space-between; font-weight:700; color:var(--slate-800); margin-bottom:6px;">
+            <span>${f.name}</span>
+            <span>${f.priceLabel}</span>
+          </div>`;
+        }).join('');
+      }
+
+      const totalEl = document.getElementById('final-total-price');
+      totalEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+      totalEl.style.color = total <= 15000 ? 'var(--mint-700)' : 'var(--red-500)';
+
+      const foods = selIds.map(id => FOOD_ITEMS[id]).filter(f => !f.isDrink);
+      const drinks = selIds.map(id => FOOD_ITEMS[id]).filter(f => f.isDrink);
+      const hasHealthyFood = foods.length === 1 && foods[0].healthy;
+      const hasHealthyDrink = drinks.length === 1 && drinks[0].healthy;
+      const withinBudget = total > 0 && total <= 15000;
+
+      const r1 = document.getElementById('rec-food-1').value;
+      const r2 = document.getElementById('rec-food-2').value;
+      const reason = document.getElementById('rec-reason').value.trim();
+      const hasWriting = r1 && r2 && reason.length >= 6;
+
+      document.getElementById('chk-food').innerHTML = `${hasHealthyFood ? '&#9745;' : '&#9744;'} Includes 1 healthy food`;
+      document.getElementById('chk-drink').innerHTML = `${hasHealthyDrink ? '&#9745;' : '&#9744;'} Includes 1 healthy drink`;
+      document.getElementById('chk-budget').innerHTML = `${withinBudget ? '&#9745;' : '&#9744;'} Total is Rp 15.000 or less`;
+      document.getElementById('chk-writing').innerHTML = `${hasWriting ? '&#9745;' : '&#9744;'} Recommendation sentence completed`;
+    }
+
+    function submitFinalMission() {
+      const selIds = Array.from(activeSession.finalSelection);
+      const foods = selIds.map(id => FOOD_ITEMS[id]).filter(f => !f.isDrink);
+      const drinks = selIds.map(id => FOOD_ITEMS[id]).filter(f => f.isDrink);
+      const total = selIds.reduce((sum, id) => sum + FOOD_ITEMS[id].price, 0);
+
+      const r1 = document.getElementById('rec-food-1').value;
+      const r2 = document.getElementById('rec-food-2').value;
+      const reason = document.getElementById('rec-reason').value.trim();
+
+      if (foods.length !== 1 || !foods[0].healthy) {
+        AudioFX.play('wrong');
+        showFeedback(false, 'Select 1 healthy main food/fruit (such as Fried Rice, Meatballs, Salad, or Banana) — avoid sugary Cake.', false);
+        return;
+      }
+      if (drinks.length !== 1 || !drinks[0].healthy) {
+        AudioFX.play('wrong');
+        showFeedback(false, 'Select 1 healthy drink (Hot Tea or Iced Tea) to complete the lunch tray.', false);
+        return;
+      }
+      if (total > 15000) {
+        AudioFX.play('wrong');
+        showFeedback(false, `Your total is Rp ${total.toLocaleString('id-ID')}, which exceeds Coach Alex's Rp 15.000 budget!`, false);
+        return;
+      }
+      if (!r1 || !r2 || reason.length < 6) {
+        AudioFX.play('wrong');
+        showFeedback(false, 'Complete the English sentence: select both items in the dropdowns and type a clear reason!', false);
+        return;
+      }
+
+      gameState.finalSentence = `I recommend ${r1} and ${r2} because ${reason.replace(/\.$/, '')}.`;
+      AudioFX.play('correct');
+      showFeedback(true, `Outstanding! Your combo (${foods[0].name} + ${drinks[0].name} = Rp ${total.toLocaleString('id-ID')}) meets every requirement.`);
+    }
+
+    /* =========================================================================
+       7. FEEDBACK, STEP PROGRESSION & LEVEL COMPLETION
+       ========================================================================= */
+    function showFeedback(isSuccess, message, allowRetry = false) {
+      const fb = document.getElementById('feedback-banner');
+      const txt = document.getElementById('feedback-text');
+      const acts = document.getElementById('feedback-actions');
+
+      fb.className = `feedback-banner show ${isSuccess ? 'success' : 'error'}`;
+      fb.style.display = 'flex';
+      txt.textContent = message;
+
+      if (isSuccess) {
+        const isLastStep = activeSession.stepIndex === activeSession.steps.length - 1;
+        acts.innerHTML = `
+          <button class="btn btn-primary btn-sm" onclick="advanceStep()">
+            ${isLastStep ? 'Finish Level & Claim Stars' : 'Next Challenge &rarr;'}
+          </button>
+        `;
+      } else if (allowRetry) {
+        acts.innerHTML = `
+          <button class="btn btn-orange btn-sm" onclick="renderCurrentStep()">Retry Question</button>
+        `;
+      } else {
+        acts.innerHTML = '';
+      }
+    }
+
+    function advanceStep() {
+      AudioFX.play('click');
+      gameState.score += 100;
+      if (activeSession.stepIndex < activeSession.steps.length - 1) {
+        activeSession.stepIndex++;
+        renderCurrentStep();
+      } else {
+        completeActiveLevel();
+      }
+    }
+
+    function completeActiveLevel() {
+      const { levelId, mistakes } = activeSession;
+      const earnedStars = mistakes === 0 ? 3 : mistakes <= 2 ? 2 : 1;
+
+      if (earnedStars > (gameState.levelStars[levelId] || 0)) {
+        gameState.levelStars[levelId] = earnedStars;
+      }
+      gameState.completedLevels[levelId] = true;
+      if (levelId < 6 && gameState.unlockedLevel <= levelId) {
+        gameState.unlockedLevel = levelId + 1;
+      }
+      gameState.score += earnedStars * 50;
+      saveState();
+
+      if (levelId === 6) {
+        showScreen('complete');
+        return;
+      }
+
+      const meta = LEVELS_META.find(l => l.id === levelId);
+      const workspace = document.getElementById('play-workspace');
+      document.getElementById('feedback-banner').style.display = 'none';
+
+      workspace.innerHTML = `
+        <div style="text-align:center; padding:24px 12px;">
+          <div class="hero-pill">Station Cleared!</div>
+          <h2 style="font-size:2rem; margin:8px 0;">${meta.title} Complete!</h2>
+          <div style="font-size:2.4rem; color:#F59E0B; letter-spacing:6px; margin:10px 0;">
+            ${'★'.repeat(earnedStars)}${'☆'.repeat(3 - earnedStars)}
+          </div>
+          <p style="color:var(--slate-600); max-width:480px; margin:0 auto 22px;">
+            You unlocked the <strong>${meta.badgeName}</strong> badge and earned bonus points!
+          </p>
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="startLevel(${levelId + 1})">Continue to Level ${levelId + 1} &rarr;</button>
+            <button class="btn btn-secondary" onclick="showScreen('map')">Back to Level Map</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCertificate() {
+      const name = gameState.playerName || 'Grade 7 Student Advisor';
+      const totalStars = Object.values(gameState.levelStars).reduce((a, b) => a + b, 0);
+      document.getElementById('cert-student-name').textContent = name;
+      document.getElementById('cert-score').textContent = gameState.score;
+      document.getElementById('cert-stars').textContent = `${totalStars} / 18`;
+      if (gameState.finalSentence) {
+        document.getElementById('cert-recommendation-quote').textContent = `“${gameState.finalSentence}”`;
+      }
+    }
+
+    /* =========================================================================
+       8. BOOTSTRAP INITIALIZATION
+       ========================================================================= */
+    window.addEventListener('DOMContentLoaded', () => {
+      if (gameState.playerName) {
+        document.getElementById('player-name-input').value = gameState.playerName;
+      }
+      renderHeroShowcase();
+      updateHUD();
+    });
+  </script>
+</body>
+</html>
